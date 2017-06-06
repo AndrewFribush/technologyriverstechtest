@@ -1,0 +1,9 @@
+development:
+  cloud_name: "zahidriaztr"
+  api_key: "168913119483495"
+  api_secret: "hPtFLBlaCuTaXcQWl5VG332yks0"
+
+production:
+  cloud_name: "sample"
+  api_key: "874837483274837"
+  api_secret: "a676b67565c6767a6767d6767f676fe1"

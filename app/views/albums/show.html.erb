@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @album.title %>
+</p>
+
+<% @album.photos.each do |p| %>
+  <%= image_tag p.picture_url, :style => "width: 300px; height: 250px;"  %>
+  <%= link_to "Edit", edit_photo_path(p) %>
+<% end %>
+
+<%= link_to 'Edit', edit_album_path(@album) %> |
+<%= link_to 'Back', albums_path %>

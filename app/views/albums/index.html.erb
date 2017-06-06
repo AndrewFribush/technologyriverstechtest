@@ -1,0 +1,33 @@
+<div class="stories">
+  <div class="panel-body clearfix">
+    <h1 class="pull-left">Stories</h1>
+    <% if can? [:manage], :all %>
+      <%= link_to 'New Album', new_album_path, { :class=>'btn btn-primary pull-right'} %>
+    <% end %>
+  </div>
+  <ul class="list-unstyled albums-list">
+    <% @albums.each do |album| %>
+      <li data-album-id="<%= album.id %>" class="single-album <% if can? :reorder, album %>sortable<% end %>">
+        <div class="panel panel-default single-album">
+          <div class="panel-heading"><h3><%= album.title %></h3></div>
+          <div class="panel-body">
+            <ul class="list-inline">
+              <li>
+                <% album.photos.each do |p| %>
+                  <%= image_tag(p.picture_url(:thumbnail), :width=>250, :height=>250) %>
+                  <% if can? [:manage], :all %><%= link_to "Edit", edit_photo_path(p) %><% end %>
+                <% end %>
+                <% if can? [:manage], :all %>
+                  <div class="actions">
+                    <%= link_to 'Edit', edit_album_path(album), {:class => 'btn btn-link'} %>
+                    <%= link_to 'Destroy', album, method: :delete, data: { confirm: 'Are you sure?', :class => 'btn btn-link'} %>
+                  </div>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
