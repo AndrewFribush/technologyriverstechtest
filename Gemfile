@@ -23,7 +23,6 @@ gem 'devise'
 gem 'cancancan'
 gem 'carrierwave'
 gem 'stripe'
-gem 'sqlite3'
 gem 'cloudinary'
 
 group :development, :test do
