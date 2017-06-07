@@ -6,9 +6,7 @@ default: &default
 
 development:
   <<: *default
-  database: MemoryWell
-  username: mzahidriaz
-  password: ''
+  database: memory_well_development
 
 test:
   <<: *default
