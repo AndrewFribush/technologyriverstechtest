@@ -10,6 +10,15 @@ class PhotosController < ApplicationController
     @photos = Photo.all
   end
 
+  def reorder
+    params[:order].each do |a, v|
+      Photo.update(a.to_i, {:order => v.to_i})
+    end
+    render json: {
+      status: :ok
+    }
+  end
+
   # GET /post_attachments/1
   # GET /post_attachments/1.json
   def show
@@ -27,32 +36,32 @@ class PhotosController < ApplicationController
   # POST /post_attachments
   # POST /post_attachments.json
   def create
-    @photo = Photo.new(photo_params)
-    @photo.order = Photo.where({:album_id => photo_params[:album_id]}).maximum(:order) + 1 || 1
-
-    respond_to do |format|
-      if @photo.save
-        format.html { redirect_to @photo, notice: 'Photo successfully added.' }
-        format.json { render :show, status: :created, location: @photo }
-      else
-        format.html { render :new }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
-      end
-    end
+    # @photo = Photo.new(photo_params)
+    # @photo.order = Photo.where({:album_id => photo_params[:album_id]}).maximum(:order) + 1 || 1
+    #
+    # respond_to do |format|
+    #   if @photo.save
+    #     format.html { redirect_to @photo, notice: 'Photo successfully added.' }
+    #     format.json { render :show, status: :created, location: @photo }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @photo.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /post_attachments/1
   # PATCH/PUT /post_attachments/1.json
   def update
-    respond_to do |format|
-      if @photo.update(photo_params)
-        format.html { redirect_to @photo.post, notice: 'Photo was successfully updated.' }
-        format.json { render :show, status: :ok, location: @photo }
-      else
-        format.html { render :edit }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
-      end
-    end
+    # respond_to do |format|
+    #   if @photo.update(photo_params)
+    #     format.html { redirect_to @photo.post, notice: 'Photo was successfully updated.' }
+    #     format.json { render :show, status: :ok, location: @photo }
+    #   else
+    #     format.html { render :edit }
+    #     format.json { render json: @photo.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # DELETE /post_attachments/1
@@ -60,7 +69,7 @@ class PhotosController < ApplicationController
   def destroy
     @photo.destroy
     respond_to do |format|
-      format.html { redirect_to photo_url, notice: 'Photo was successfully destroyed.' }
+      format.html { redirect_to albums_url, notice: 'Photo was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

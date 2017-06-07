@@ -4,7 +4,7 @@
      <%= f.text_field :title , class: "form-control"%>
    </div>
 
-  <%= f.fields_for :photos do |p| %>
+  <%= f.fields_for :album_attachment do |p| %>
     <div class="field form-group">
       <%= p.label :picture %><br>
       <%= p.file_field :picture, :multiple => true, name: "photo[picture][]" %>
@@ -15,3 +15,11 @@
     <%= f.submit "Submit" , class: "btn btn-success btn-lg"%>
   </div>
 <% end %>
+
+<ul class="list-inline">
+  <% @album_attachment.each do |p| %>
+    <li>
+      <%= cl_image_tag(p.picture, {:class => "thumbnail inline", :background=>"black", :crop=>"pad", :height => 250, :width => 250}) %>
+    </li>
+  <% end %>
+</ul>

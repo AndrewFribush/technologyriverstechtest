@@ -1,14 +1,35 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <h3 class="panel-title pull-left"><%= @album.title %></h3>
+    <%= link_to 'Back', albums_path, {:class => 'pull-right'} %>
+  </div>
+  <div class="panel-body">
+    <div id="album_photos_container" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <% @album.photos.each_with_index do |p, i| %>
+        <li data-target="#album_photos_container" data-slide-to="<%= i %>" class="<%if i == 0 %>active<% end %>"></li>
+        <% end %>
+      </ol>
 
-<p>
-  <strong>Title:</strong>
-  <%= @album.title %>
-</p>
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        <% @album.photos.each_with_index do |p, i| %>
+          <div class="item <%if i == 0 %>active<% end %>">
+            <%= cl_image_tag(p.picture, {:class => "thumbnail inline", :background=>"black", :crop=>"pad", :height => 500, :width => 800}) %>
+          </div>
+        <% end %>
+      </div>
 
-<% @album.photos.each do |p| %>
-  <%= image_tag p.picture_url, :style => "width: 300px; height: 250px;"  %>
-  <%= link_to "Edit", edit_photo_path(p) %>
-<% end %>
-
-<%= link_to 'Edit', edit_album_path(@album) %> |
-<%= link_to 'Back', albums_path %>
+      <!-- Controls -->
+      <a class="left carousel-control" href="#album_photos_container" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#album_photos_container" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+</div>

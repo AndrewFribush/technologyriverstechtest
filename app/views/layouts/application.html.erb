@@ -44,10 +44,10 @@
                         <ul class="nav navbar-nav">
                             <% if user_signed_in? %>
                                 <li class="dropdown" >
-                                  <button class="btn btn-link dropdown-toggle logout-btn" type="button" id="menu1" data-toggle="dropdown">
-                                  <span class="user-name"><%= current_user.last_name + ", " + current_user.first_name %></span>
+                                  <button class="btn btn-link dropdown-toggle logout-btn" type="button" id="profileMenu" data-toggle="dropdown">
+                                  <span class="user-name"><%= current_user.first_name + ", " + current_user.last_name %></span>
                                   <span class="caret"></span></button>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
+                                  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="profileMenu">
                                     <li>
                                       <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
                                     </li>

@@ -1,0 +1,35 @@
+.carousel {
+  width: 800px;
+  height: 500px;
+  margin: 0 auto;
+}
+.btn-link.btn-danger {
+  color: #d43f3a;
+}
+
+
+.photo-list {
+  li {
+    position: relative;
+    a.btn-danger {
+      position: absolute;
+      top: 1px;
+      background: #FFF;
+      box-shadow: -1px 1px 1px 0px;
+      right: 6px;
+      display: none;
+    }
+
+    &:hover {
+      a.btn-danger {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.navbar-nav {
+  >.dropdown {
+    margin-top: 7px;
+  }
+}

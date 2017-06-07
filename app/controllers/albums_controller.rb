@@ -27,11 +27,12 @@ class AlbumsController < ApplicationController
 
     def new
      @album = Album.new
-     @album_attachment = @album.photos.build
+     @album_attachment = @album.photos.all
     end
 
     # GET /posts/1/edit
     def edit
+      @album_attachment = @album.photos.all
     end
 
     # POST /posts
@@ -43,7 +44,6 @@ class AlbumsController < ApplicationController
       respond_to do |format|
         if @album.save
           params[:photo]['picture'].each do |a|
-            order =
             @photo = @album.photos.create!(:picture => a, :album_id => @album.id, :order => Photo.where({:album_id => @album.id}).maximum(:order).to_i + 1)
           end
          format.html { redirect_to @album, notice: 'Album was successfully created.' }
@@ -58,6 +58,9 @@ class AlbumsController < ApplicationController
     def update
       respond_to do |format|
         if @album.update(album_params)
+          params[:photo]['picture'].each do |a|
+            @photo = @album.photos.create!(:picture => a, :album_id => @album.id, :order => Photo.where({:album_id => @album.id}).maximum(:order).to_i + 1)
+          end
           format.html { redirect_to @album, notice: 'Album was successfully updated.' }
           format.json { render :show, status: :ok, location: @album }
         else
@@ -72,7 +75,7 @@ class AlbumsController < ApplicationController
     def destroy
       @album.destroy
       respond_to do |format|
-        format.html { redirect_to posts_url, notice: 'Album was successfully destroyed.' }
+        format.html { redirect_to albums_url, notice: 'Album was successfully destroyed.' }
         format.json { head :no_content }
       end
     end

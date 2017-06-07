@@ -2,30 +2,38 @@
   <div class="panel-body clearfix">
     <h1 class="pull-left">Stories</h1>
     <% if can? [:manage], :all %>
-      <%= link_to 'New Album', new_album_path, { :class=>'btn btn-primary pull-right'} %>
+      <%= link_to new_album_path, { :class=>'btn btn-primary pull-right'} do%>
+        <span class="glyphicon glyphicon-plus"></span> New Album
+      <% end %>
     <% end %>
   </div>
   <ul class="list-unstyled albums-list">
     <% @albums.each do |album| %>
       <li data-album-id="<%= album.id %>" class="single-album <% if can? :reorder, album %>sortable<% end %>">
         <div class="panel panel-default single-album">
-          <div class="panel-heading"><h3><%= album.title %></h3></div>
+          <div class="panel-heading clearfix">
+            <h3 class="pull-left"><span class="glyphicon glyphicon-sort"></span> <%= album.title %></h3>
+            <%= link_to 'Show', album, {:class => 'pull-right btn btn-primary'} %>
+          </div>
           <div class="panel-body">
-            <ul class="list-inline">
-              <li>
-                <% album.photos.each do |p| %>
-                  <%= image_tag(p.picture_url(:thumbnail), :width=>250, :height=>250) %>
-                  <% if can? [:manage], :all %><%= link_to "Edit", edit_photo_path(p) %><% end %>
-                <% end %>
-                <% if can? [:manage], :all %>
-                  <div class="actions">
-                    <%= link_to 'Edit', edit_album_path(album), {:class => 'btn btn-link'} %>
-                    <%= link_to 'Destroy', album, method: :delete, data: { confirm: 'Are you sure?', :class => 'btn btn-link'} %>
-                  </div>
-                <% end %>
-              </li>
+            <ul class="list-inline photo-list">
+              <% album.photos.each do |p| %>
+                <li data-photo-id="<%= p.id %>" class="<% if can? [:manage], :all %>sortable<% end %>">
+                  <%= cl_image_tag(p.picture, {:class => "thumbnail inline", :background=>"black", :crop=>"pad", :height => 250, :width => 250}) %>
+
+                  <%= link_to p, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-link btn-danger' do%>
+                    <span class="glyphicon glyphicon-remove"></span>
+                  <% end %>
+                </li>
+              <% end %>
             </ul>
           </div>
+          <% if can? [:manage], :all %>
+          <div class="panel-footer actions">
+            <%= link_to 'Edit', edit_album_path(album), {:class => 'btn btn-link'} %>
+            <%= link_to 'Destroy', album, method: :delete, data: { confirm: 'Are you sure?'}, class: 'btn btn-link btn-danger' %>
+          </div>
+          <% end %>
         </div>
       </li>
     <% end %>

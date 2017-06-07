@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   root to: "main#home"
 
-  resources :photos
+  resources :photos do
+    post :reorder, on: :collection
+  end
   resources :albums do
     post :reorder, on: :collection
   end
